@@ -23,9 +23,8 @@ const parseBold = (text: string) => {
 };
 
 const LOADING_MESSAGES = [
-  "Buscando texto bíblico...",
-  "Consultando a sabedoria de Salomão...",
-  "Preparando a reflexão do dia...",
+  "Abrindo o pergaminho...",
+  "Lendo o texto bíblico...",
 ];
 
 const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
@@ -52,8 +51,9 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
     setError(null);
     setShowNextSuggestion(false);
     
-    // Cache Key v12 (GitHub Raw NVI) - Força atualização para usar o arquivo estático
-    const cacheKey = `wisdom_day_${day}_v12_github_nvi`;
+    // CACHE KEY ATUALIZADA - "v19_final_check"
+    // Isso força o recarregamento com o novo banco de dados
+    const cacheKey = `wisdom_day_${day}_v19_final_check`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {
@@ -78,11 +78,11 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
           setContent(result);
         }
       } else {
-        throw new Error("Falha ao carregar conteúdo.");
+        throw new Error("Falha ao carregar texto.");
       }
     } catch (err: any) {
       console.error("Load content error:", err);
-      setError("Não foi possível carregar o capítulo. Verifique sua conexão e tente novamente.");
+      setError("Erro inesperado. Tente recarregar a página.");
     } finally {
       setLoading(false);
     }
@@ -158,7 +158,6 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
       <div className="flex flex-col items-center justify-center min-h-[60vh] animate-pulse px-6 text-center">
         <div className="w-16 h-16 border-4 border-gold-400 border-t-transparent rounded-full animate-spin mb-6"></div>
         <p className="text-royal-900 dark:text-gold-400 font-serif text-lg font-medium">{LOADING_MESSAGES[loadingMsgIndex]}</p>
-        <p className="text-xs text-slate-400 mt-4">Isso pode levar alguns segundos...</p>
       </div>
     );
   }
