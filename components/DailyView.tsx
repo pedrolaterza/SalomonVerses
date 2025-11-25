@@ -52,8 +52,8 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
     setError(null);
     setShowNextSuggestion(false);
     
-    // Cache Key v9 (Raw Data from GitHub NVI)
-    const cacheKey = `wisdom_day_${day}_v9_raw_nvi`;
+    // Cache Key v12 (GitHub Raw NVI) - Força atualização para usar o arquivo estático
+    const cacheKey = `wisdom_day_${day}_v12_github_nvi`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {
