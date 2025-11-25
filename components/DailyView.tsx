@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { DailyContent, UserState } from '../types';
 import { fetchDailyWisdom } from '../services/geminiService';
@@ -53,17 +54,16 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
     setError(null);
     setShowNextSuggestion(false);
     
-    // CACHE KEY ATUALIZADA - "v20_ai_fix"
-    // Mudamos a versão para obrigar o navegador a tentar buscar a IA novamente
-    // em vez de mostrar o conteúdo genérico que pode ter ficado salvo.
-    const cacheKey = `wisdom_day_${day}_v20_ai_fix`;
+    // CACHE KEY ATUALIZADA - "v21_ai_settings_fix"
+    // Isso garante que o navegador ignore versões antigas com texto genérico
+    const cacheKey = `wisdom_day_${day}_v21_ai_settings_fix`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {
       try {
         const parsed = JSON.parse(cached);
-        // Verificação simples se é o conteúdo genérico antigo (opcional, mas bom para garantir)
-        if (parsed.interpretation !== "...") {
+        // Se a interpretação for o texto genérico antigo, forçamos recarregar
+        if (parsed.interpretation && !parsed.interpretation.startsWith("A sabedoria de Salomão é profunda.")) {
             setContent(parsed);
             setLoading(false);
             return;
