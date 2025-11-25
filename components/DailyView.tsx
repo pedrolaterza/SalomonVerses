@@ -25,6 +25,8 @@ const parseBold = (text: string) => {
 const LOADING_MESSAGES = [
   "Abrindo o pergaminho...",
   "Lendo o texto bíblico...",
+  "Consultando a sabedoria...",
+  "Preparando reflexão..."
 ];
 
 const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
@@ -51,16 +53,21 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
     setError(null);
     setShowNextSuggestion(false);
     
-    // CACHE KEY ATUALIZADA - "v19_final_check"
-    // Isso força o recarregamento com o novo banco de dados
-    const cacheKey = `wisdom_day_${day}_v19_final_check`;
+    // CACHE KEY ATUALIZADA - "v20_ai_fix"
+    // Mudamos a versão para obrigar o navegador a tentar buscar a IA novamente
+    // em vez de mostrar o conteúdo genérico que pode ter ficado salvo.
+    const cacheKey = `wisdom_day_${day}_v20_ai_fix`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {
       try {
-        setContent(JSON.parse(cached));
-        setLoading(false);
-        return;
+        const parsed = JSON.parse(cached);
+        // Verificação simples se é o conteúdo genérico antigo (opcional, mas bom para garantir)
+        if (parsed.interpretation !== "...") {
+            setContent(parsed);
+            setLoading(false);
+            return;
+        }
       } catch (e) {
         localStorage.removeItem(cacheKey);
       }
