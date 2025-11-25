@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { DailyContent, UserState } from '../types';
 import { fetchDailyWisdom } from '../services/geminiService';
@@ -54,9 +53,9 @@ const DailyView: React.FC<DailyViewProps> = ({ user, onUpdateUser }) => {
     setError(null);
     setShowNextSuggestion(false);
     
-    // CACHE KEY ATUALIZADA - "v21_ai_settings_fix"
-    // Isso garante que o navegador ignore versões antigas com texto genérico
-    const cacheKey = `wisdom_day_${day}_v21_ai_settings_fix`;
+    // CACHE KEY ATUALIZADA - "v22_ai_restored"
+    // Força o recarregamento para usar a nova chave de API
+    const cacheKey = `wisdom_day_${day}_v22_ai_restored`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {

@@ -9,10 +9,9 @@
       // Polyfill robusto para evitar "process is not defined"
       window.process = window.process || {};
       window.process.env = window.process.env || {};
-      // Se não houver API_KEY definida, define como string vazia para evitar crash na inicialização
-      if (!window.process.env.API_KEY) {
-        window.process.env.API_KEY = '';
-      }
+      
+      // INJEÇÃO DA CHAVE DE API (Garantia de funcionamento da IA)
+      window.process.env.API_KEY = 'AIzaSyBupxKTUvWaqkXPPIHI2Jj03elqs5I7D7g';
       
       tailwind.config = {
         darkMode: 'class',
